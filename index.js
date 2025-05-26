@@ -24,8 +24,12 @@ app.get("/api/hello", function (req, res) {
   res.json({greeting: 'hello API'});
 });
 
-app.get("api/1451001600000",(req,res) => {
+app.get("/api/1451001600000",(req,res) => {
   let dor = new Date(1451001600000);
+  console.log(dor);
+   console.log(dor.getTime());
+  console.log(dor.toUTCString());
+
   res.json({ "unix": dor.getTime(),"utc": dor.toUTCString()});
 });
 
@@ -35,15 +39,11 @@ app.get("/api/", (req,res) => {
 });
 
 app.get("/api/:date?",(req , res) => {
-  console.log(req.params.date);
-  let dor = new Date(req.params.date);
-  if(dor) res.json({ "unix": dor.getTime(),"utc": dor.toUTCString()});
-   else res.json({error : "Invalid Date"});
-  
+  console.log("date is   -  ",req.params.date);
+  let dor = new Date((req.params.date));
   console.log(dor);
-  console.log(dor.getTime());
-  console.log(dor.toUTCString());
-  
+  if(!isNaN(dor.getTime())) res.json({ "unix": dor.getTime(),"utc": dor.toUTCString()});
+   else res.json({error : "Invalid Date"});
   
 });
 
